@@ -1,0 +1,15 @@
+/venv
+.env
+/.env
+/assets
+*.sqlite3
+business.json
+*.md
+*.json
+*.rar
+
+/*.sqlite3
+/business.json
+/*.md
+/*.json
+/*.rar

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+            <!-- Begin Li's Breadcrumb Area -->
+            <div class="breadcrumb-area">
+                <div class="container">
+                    <div class="breadcrumb-content">
+                        <ul>
+                            <li><a href="{% url 'core:index' %}">Accueil</a></li>
+                            <li class="active">Contact</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Li's Breadcrumb Area End Here -->     
+            <!-- Begin Contact Main Page Area -->
+            <div class="contact-main-page mt-60 mb-40 mb-md-40 mb-sm-40 mb-xs-40">
+                <div class="container mb-60">
+                    {% if business.google_maps %}
+                    <div id="google-map">
+                        {{business.google_maps|safe}}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5 offset-lg-1 col-md-12 order-1 order-lg-2">
+                            <div class="contact-page-side-content">
+                                <h3 class="contact-page-title">Contactez nous</h3>
+                                <p class="contact-page-message mb-25">{{business.contact_message}}</p>
+                                <div class="single-contact-block">
+                                    <h4><i class="fa fa-fax"></i> Addresse</h4>
+                                    <p>{{business.adress}}</p>
+                                </div>
+                                <div class="single-contact-block">
+                                    <h4><i class="fa fa-phone"></i> Téléphone</h4>
+                                    <p>{{business.phone}}</p>
+                                    <p>{{business.phone2}}</p>
+                                </div>
+                                <div class="single-contact-block last-child">
+                                    <h4><i class="fa fa-envelope-o"></i> Emails</h4>
+                                    {% if business.email %}
+                                        <p>{{business.email}}</p>
+                                    {% endif %} 
+                                    {% if business.email2 %}
+                                        <p>{{business.email2}}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 order-2 order-lg-1">
+                            <div class="contact-form-content pt-sm-55 pt-xs-55">
+                                <h3 class="contact-page-title">Laisser Un Message</h3>
+                                <div class="contact-form">
+                                    <form action="{% url 'core:contact' %}" method=POST >
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label>Votre Nom<span class="required">*</span></label>
+                                            <input type="text" name="name" id="customername" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Votre Email <span class="required">*</span></label>
+                                            <input type="email" name="email" id="customerEmail" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Téléphone<span class="required">*</span></label>
+                                            <input type="phone" name="phone" id="customerPhone" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Sujet</label>
+                                            <input type="text" name="subject" id="contactSubject">
+                                        </div>
+                                        <div class="form-group mb-30">
+                                            <label>Votre Message</label>
+                                            <textarea name="message" id="message" ></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" value="submit" id="submit" class="li-btn-3" name="submit">Envoyer</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <p class="form-messege"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact Main Page Area End Here -->
+         
+
+<!-- contact32:04-->
+{% endblock %}

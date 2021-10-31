@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% load static %}
+{% load mptt_tags %}
+
+{% block content %}
+            <!-- Begin Li's Breadcrumb Area -->
+            {% if category %}
+                {% if request.GET.category != 'all' %}
+                    <div class="breadcrumb-area">
+                        <div class="container">
+                            <div class="breadcrumb-content">
+                                <ul>
+                                    <li><a href="{% url 'core:index' %}">Acceuil</a></li>
+                                    {% for cat in category.get_ancestors %}
+                                    <li><a href="{{cat.get_absolute_url}}">{{cat.name}}</a></li>
+                                    {% endfor %}
+                                    <li class="active">{{category.name}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+            <!-- Li's Breadcrumb Area End Here -->
+            <!-- Begin Li's Content Wraper Area -->
+            <div class="content-wraper pt-60 pb-60 pt-sm-30">
+                <div class="container">
+                    <div class="row">
+                        {% include "snippets/htmx_products.html" %}
+                        <div class="col-lg-3 order-2 order-lg-1">
+                            <form method="GET" hx-get="{% url 'core:filtered-products' %}" hx-trigger="change" hx-target="#removed-products" hx-swap="outerHTML"> 
+                                <div class="sidebar-categores-box mt-sm-30 mt-xs-30">
+                                    <input type="text" name="name" placeholder="Recherchez..." >
+                                </div>
+                                <div class="sidebar-categores-box mt-sm-30 mt-xs-30">
+                                    <div class="sidebar-title">
+                                        <h2>Trier par</h2>
+                                    </div>
+                                    <select name="ordering" id="id_ordering" style="width: 100%;">
+                                        <option value="default">Default</option>
+                                        <option value="name">Nom (A - Z)</option>
+                                        <option value="-name">Nom (Z - A)</option>
+                                        <option value="price">Prix</option>
+                                    </select>
+                                </div>
+                                <div class="sidebar-categores-box mt-sm-30 mt-xs-30">
+                                    <div class="sidebar-title">
+                                        <h2>Categories</h2>
+                                    </div>
+                                    <div class="category-sub-menu categori-checkbox">
+                                        <ul>
+                                            {% recursetree categories %}
+                                                {% if node.children.count > 0 %}
+                                                    <li class="has-sub text-uppercase"><a href="{{node.get_absolute_url}}" style="font-size: 15px;">{{node.name}}</a>
+                                                        <ul>
+                                                            {% for cat in node.children.all %}
+                                                                <li>
+                                                                    <input class="d-inline" type="checkbox" name="category" id="cat-{{cat.id}}" value="{{cat.id}}">
+                                                                    <label class="d-inline text-uppercase" for="cat-{{cat.id}}">
+                                                                        <span></span>
+                                                                        {{cat.name}}
+                                                                    </label>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </li>
+                                                {% endif %}
+                                            {% endrecursetree %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="sidebar-categores-box mt-sm-30 mt-xs-30">
+                                    <div class="sidebar-title">
+                                        <h2>Autres Filtres</h2>
+                                    </div>
+                                    <div class="category-sub-menu categori-checkbox">
+                                        <ul>
+                                            <li class="ml-5">
+                                                <input type="checkbox" name="new" id="nouveaux" value="true">
+                                                <label for="nouveaux">
+                                                    <span></span>
+                                                    Nouveaux Produits
+                                                </label>
+                                            </li>
+                                            <li class="ml-5">
+                                                <input type="checkbox" name="old_price" value="true" id="promotions" >
+                                                <label for="promotions">
+                                                    <span></span>
+                                                    Promotions
+                                                </label>
+                                            </li>
+                                            <li class="has-sub"><a href="#" style="font-size: 15px;">Gammes</a>
+                                                <ul>
+                                                    {% for gamme in gammes %}
+                                                    {% if gamme.products.all.count > 0 %}
+                                                        <li>
+                                                            <input type="checkbox" name="gamme" id="gamme-{{gamme.id}}" value="{{gamme.id}}">
+                                                            <label for="gamme-{{gamme.id}}">
+                                                                <span></span>
+                                                                {{gamme.name}}
+                                                                <small>({{gamme.products.count}})</small>
+                                                            </label>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                </ul>
+                                            </li>
+                                            <li class="has-sub"><a href="#" style="font-size: 15px;">Tags</a>
+                                                <ul>
+                                                    {% for tag in tags %}
+                                                        {% if tag.product_set.all.count > 0 %}
+                                                                <li>
+                                                                    <input type="checkbox" name="tag" id="tag-{{tag.id}}" value="{{tag.id}}">
+                                                                    <label for="tag-{{tag.id}}">
+                                                                        <span></span>
+                                                                        {{tag.name}}
+                                                                        <small>({{tag.product_set.all.count}})</small>
+                                                                    </label>
+                                                                </li>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- <div class="apply-filters">
+                                    <button class="filter-button" type="submit">Filtrer</button>
+                                </div> -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Content Wraper Area End Here -->
+{% endblock content %}
+ 
