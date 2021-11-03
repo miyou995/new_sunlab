@@ -26,7 +26,7 @@ if settings.DEBUG:
     urlpatterns += path('__debug__/', include(debug_toolbar.urls)),
     urlpatterns += path('admin/', admin.site.urls),
 else:
-    urlpatterns += path('kahraba-admin/', admin.site.urls),
+    urlpatterns += path('sunlab-admin/', admin.site.urls),
 
 
 
