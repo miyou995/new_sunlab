@@ -56,6 +56,9 @@
             <link rel="stylesheet" href="{% static "css/responsive.css" %}">
             <!-- Modernizr js -->
                 <script src="{% static "js/vendor/modernizr-2.8.3.min.js" %}"></script>
+        {% block style_css %}
+  
+        {% endblock style_css %}
     </head>
     <body>
       <style>
@@ -120,8 +123,12 @@
               color:{{config.text_nav_bar_color}} ;
           }
           {% endif %}
-
-          
+          {% if config.theme_color %}
+          .footer,.your-order, thead,.sidebar-categores-box,.sidebar-categores-box > input,.sidebar-categores-box > select, .breadcrumb-area,.shop-add-action{
+              background-color:{{config.theme_color}} ;
+              border: none;
+          }
+          {% endif %}
       </style>
     <!--[if lt IE 8]>
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -165,7 +172,7 @@
                                 <!-- Header Middle Searchbox Area End Here -->
                                 <!-- Begin Header Middle Right Area -->
                                 <div class="header-middle-right">
-                                    <ul class="hm-menu">
+                                    <ul class="hm-menu">     
                                     <!-- Begin Header Middle Wishlist Area -->
                                         {% include "snippets/cart-count.html" %}
                                     </ul>

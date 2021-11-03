@@ -49,11 +49,9 @@ def total_da(obj):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'first_name','last_name' ,'phone' ,'email' ,'created' ,'updated' ,total_da,'confirmer', 'paid', order_detail, order_pdf]
     list_display_links =('id', 'first_name', 'last_name')
-    list_filter = ['paid','created' ,'updated']
+    list_filter = ['paid','confirmer','created' ]
     list_editable = ['confirmer','paid']
     inlines = [OrderItemInline] 
     actions = [export_to_csv]
     list_per_page = 30
-
-
 

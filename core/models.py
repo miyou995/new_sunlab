@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.aggregates import Variance
 from django.utils.text import slugify
 # Create your models here.
 from django.urls import reverse
@@ -224,3 +225,5 @@ class ContactForm(models.Model):
         ordering = ('id',)
         verbose_name = 'Formulaire de contact'
         verbose_name_plural = 'Formulaire de contact'
+
+

@@ -134,6 +134,15 @@
                     </div>
                 </div>
             </div>
+            <!-- <div class="example-form">
+                <form id="order_form" method="post" data-communes-url="{% url 'delivery:load_communes' %}">
+                    {% csrf_token %}
+                {{form.as_p}}
+                <div class="order-button-payment">
+                    <input value="Confirmer la commande" type="submit">
+                </div>
+                </form>
+            </div> -->
             <!--Shopping Cart Area End-->
             <div class="checkout-area pt-60 pb-30">
                 <div class="container">
@@ -180,7 +189,7 @@
                                             <select class=" wide" name="wilaya" id="wilayaId" style="background-color: #ffffff; border-radius: 5px;border:solid 1px #e8e8e8">
                                                 <option  value='' selected>Wilaya</option>
                                                 {% for wilaya in wilayas %}
-                                                    <option  data-price={{wilaya.price}}  value={{wilaya.id}} >{{wilaya.name}}</option>
+                                                    <option data-relai="{{wilaya.relai_delivery}}" data-home="{{wilaya.home_delivery}}" data-id="{{wilaya.id}}" value="{{wilaya.id}}">{{wilaya.name}}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -201,7 +210,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="checkout-form-list">
-                                            <label>Phone  <span class="required">*</span></label>
+                                            <label>Phone<span class="required">*</span></label>
                                             <input type="text" name="phone">
                                         </div>
                                     </div>
@@ -216,6 +225,23 @@
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="your-order">
+                                <h3>Mode de Livraison</h3>
+                                <div class="payment_item">
+                                    <div class="radion_btn">
+                                        <input type="radio" checked id="home" name="delivery" value="DOM">
+                                        <label for="home">Livraison a domicile</label>
+                                        <div class="check"></div>
+                                    </div>
+                                </div>
+                                <div class="payment_item active">
+                                    <div class="radion_btn">
+                                        <input type="radio" id="relais" name="delivery" value="REL">
+                                        <label for="relais">Livraison au point de relais</label>
+                                        <div class="check"></div>
+                                    </div>
+                                </div>
+							</div>
+                            <div class="your-order">
                                 <h3>Votre Commande</h3>
                                 <div class="your-order-table table-responsive">
                                     <table class="table">
@@ -225,7 +251,7 @@
                                                 <tr class="cart_item">
                                                     <td class="cart-product-name"> <strong class="product-quantity">Total panier</strong> </td>
                                                     <td class="cart-product-total"><span class="amount">{{ cart.get_total_price|floatformat:2 }} DZD</span></td>  
-                                                  </tr>
+                                                </tr>
                                             {% if cart.coupon %}
                                                 <tr class="cart_item">
                                                     <td class="cart-product-name"> <strong class="product-quantity">Réduction</strong> </td>
@@ -244,14 +270,13 @@
                                         <tfoot style="background-color: #f6f6f6;">
                                                 <tr class="cart-subtotal">
                                                     <th>Total</th>
-                                                    <th><div><strong class="order-total" id="order_total" data-order-total="{{ cart.get_total_price_after_discount|floatformat:2}}"></strong></div></th>
+                                                    <th><div><strong class="order-total" id="order_total" data-order-total="{{cart.get_total_price_after_discount|floatformat:2}}"></strong></div></th>
                                                 </tr>
                                         </tfoot>
                                     </table>
                                 </div>
                                 <div class="payment-method">
                                     <div class="payment-accordion">
-                                        
                                         <div class="order-button-payment">
                                             <input value="Confirmer la commande" type="submit">
                                         </div>

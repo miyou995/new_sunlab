@@ -33,6 +33,7 @@ class Configuration(SingletonModel):
     buttons_color = ColorField(format='hexa',verbose_name='couleur des bouttons', blank=True, null=True)
     text_buttons_color = ColorField(format='hexa',verbose_name='couleur du text des bouttons', blank=True, null=True)
     links_color = ColorField(format='hexa',verbose_name='couleur du text liens', blank=True, null=True)
+    theme_color = ColorField(format='hexa',verbose_name='couleur du Theme', blank=True, null=True)
 
 class Business(SingletonModel):
     name        = models.CharField(verbose_name="Nom de l'entreprise", max_length=100)

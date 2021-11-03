@@ -5,7 +5,8 @@ class Wilaya(models.Model):
 
     name = models.CharField(max_length=40, verbose_name="Wilaya")
     mat = models.IntegerField(verbose_name='Matricule', blank=True,null=True)
-    price = models.DecimalField( max_digits=10, verbose_name="Prix de Livraison", decimal_places=2)
+    relai_delivery = models.DecimalField( max_digits=10, verbose_name="Livraison point de Relais", decimal_places=2, default=0)
+    home_delivery = models.DecimalField( max_digits=10, verbose_name="Livraison à domicile", decimal_places=2, default=0)
     active = models.BooleanField(default=True, verbose_name="Livraison Active")
     
     class Meta:

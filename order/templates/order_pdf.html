@@ -26,7 +26,11 @@
             tbody tr:nth-child(odd) {
                 background:#efefef;
             }
-            
+            thead th, tbody tr.delivery {
+                background: #505050;
+                color:#fff;
+                font-weight:bold;
+            }
             thead th, tbody tr.total {
                 background: #15161D;
                 color:#fff;
@@ -68,7 +72,12 @@
         </style>
     </head>
     <body>
+        {% if business_logo %}
+          
+        <img style="max-width:180px;" src="{{business_logo}}" alt="{{business}}">
+        {% endif %}
         <h1>{{business}}</h1>
+
         <p>
             Commande Numéro° {{ order.id }} <br>
             <span class="secondary"> {{ order.created|date:"M d, Y" }} </span>
@@ -77,16 +86,16 @@
         <p>
             Monsieur/ Madame: {{ order.first_name }} {{ order.last_name }}<br>
             Email: {{ order.email }}<br>
-            Adresse: {{ order.addresse }}<br>
+            Adresse: {{ order.address }}<br>
             Wilaya: {{ order.wilaya.name }}<br>
             Commune: {{ order.commune.name }} <br>
-            Livraison: {{order.delivery}} <br>
             {% if order.coupon %}
-            Coupon: {{order.coupon.code}} <br>
-            Réduction: {{order.discount_amount}} DA
+                Coupon: {{order.coupon.code}} <br>
+                Réduction: {{order.discount_amount}} DA
             {% endif %}
+
         </p>
-        <h3>Articles acheté :</h3>
+        <h3>Articles achetés :</h3>
         <table>
             <thead>
                 <tr>
@@ -105,13 +114,18 @@
                         <td class="num">{{ item.get_cost }} DA</td>
                     </tr>
                 {% endfor %}
+                <tr class="delivery">
+                    <td colspan="3">Livraison</td>
+                    <td class="num">{{ order.delivery_cost}} DA</td>
+                </tr>
+
                 <tr class="total">
                     {% if order.coupon %}
-                    <td colspan="3">Total après réduction</td>
-                    <td class="num">{{ order.get_total_cost}} DA</td>
+                        <td colspan="3">Total après réduction</td>
+                        <td class="num">{{ order.get_total_cost}} DA</td>
                     {% else %}
-                    <td colspan="3">Total</td>
-                    <td class="num">{{ order.get_total_cost}} DA</td>
+                        <td colspan="3">Total</td>
+                        <td class="num">{{ order.get_total_cost}} DA</td>
                     {% endif %}
                 </tr>
             </tbody>

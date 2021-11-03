@@ -37,6 +37,7 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
 		26. WOW
 
 -----------------------------------------------------------------------------------*/
+
 (function ($) {
 	"use Strict";
 /*----------------------------------------*/
@@ -77,34 +78,54 @@ Note: main.js, All Default Scripting Languages For This Theme Included In This F
 
 
 /*----------------------------------------*/
-/* XX. WILAYA
+/* XX.DELIVERY
 /*----------------------------------------*/
-$("#wilayaId").change(function () {
+$("#wilayaId").change(wilaya)
+$(".your-order").change(wilaya)
+function wilaya() {
 	const url = $("#order_form").attr("data-communes-url"); 
 	const order_total_container = document.querySelector('#order_total')
-
-	const wilayaPk = $(this).val();
+	console.log(url);
 	var wilaya = document.getElementById('wilayaId');
+	const wilayaPk = wilaya.value;
+	var relais = document.getElementById('relais');
+	var home = document.getElementById('home');
 	var selected = wilaya.options[wilaya.selectedIndex];
-	var price = selected.getAttribute('data-price');
-
-	const total_without_delivery = parseFloat(order_total_container.getAttribute('data-order-total'))
+	// console.log('selected.relais', relais.checked);
+	// console.log('selected.home', home.checked);
+	
+	var relaisPrice = selected.getAttribute('data-relai');
+	var homePrice = selected.getAttribute('data-home');
+	var total_without_delivery = parseFloat(order_total_container.getAttribute('data-order-total'))
 	console.log('total_without_delivery', total_without_delivery);
-	const total_price = parseFloat(total_without_delivery) + parseFloat(price)
+	if (relais.checked) {
+		greeting = "Good morning";
+		console.log('livraison point de relais',relaisPrice);
+		var price = relaisPrice
+		var total_price = parseFloat(total_without_delivery) + parseFloat(price)
+	} else if (home.checked) {
+		console.log('livraison a domicile',homePrice);
+		var price = homePrice
+		var total_price = parseFloat(total_without_delivery) + parseFloat(price)
+	} else {
+		console.log('sans livrasibns');
+		var price = 0
+		var total_price = parseFloat(total_without_delivery) + parseFloat(price)
+	}
+	console.log(total_price);
 	$.ajax({                   
 		url: url,                
 		data: {
 			'wilaya_id': wilayaPk      
 		},
-		
 		success: function (data) { 
 			$("#communesId").html(data);
 			$('#deliveryCost').html(price);
 			$('#order_total').html(total_price);
-			console.log('communes', data);
+			// console.log('communes', data);
 		}
 	});
-});
+};
 
 $('#ordering').change(function(){
 	const url = $('#ordering-form').attr('data-ordered-products');

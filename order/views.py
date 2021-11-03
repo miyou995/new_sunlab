@@ -16,6 +16,7 @@ from business.models import Business
 from django.core.mail import EmailMessage
 import pprint
 from io import BytesIO
+
 def order_create_one_product(request,product_id=None):
     form = OrderFormWithQuantity()
     if request.method == 'POST':
@@ -75,6 +76,7 @@ def order_create(request):
             if form.is_valid():
                 order = form.save()
                 order.delivery_cost = order.wilaya.price
+                print('oDELIVERY CHOIXE', order.delivery)
                 order.save()
                 # print('delivery cost', order.wilaya.price)
                 for item in cart:
@@ -112,7 +114,9 @@ def order_create(request):
                         'total_price_with_delivery': total_price_with_delivery,
                         'pdf_file': pdf_file,
                     }
-                    return render(request, 'created.html', context)
+                    return render(request, 'cart.html', {'cart':cart, 'form' : form, 'wilayas': wilayas, 'communes': communes}) # just examples
+
+                    # return render(request, 'created.html', context)
                 except :
                     print('yaw matebaatch')
                 # stylesheets=[weasyprint.CSS(str(configs.STATIC_ROOT) + 'css/pdf.css' )]

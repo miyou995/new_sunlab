@@ -19,6 +19,7 @@ from order.forms import OrderCreateForm
 from django.core.mail import EmailMessage
 from io import BytesIO
 import weasyprint
+from .tasks import order_created
     
 # class CheckoutView(TemplateView):
 #     template_name = "checkout.html"
@@ -41,11 +42,22 @@ def cart_detail(request):
     if cart.__len__() :
         # print('request', request.method)
         if request.method == 'POST':
+            print('SEEEEENT FOOOOOOOOOORPM')
+
             form = OrderCreateForm(request.POST)
             # print(form)
+
             if form.is_valid():
+                print('VALID FOOOOOOOOOORPM')
                 order = form.save()
-                order.delivery_cost = order.wilaya.price
+                delivery_choice = form.cleaned_data['delivery']
+                if delivery_choice == 'REL':
+                    order.delivery_cost = order.wilaya.relai_delivery #a performer pck sa depend du choix de lutilisateur
+                elif delivery_choice == 'DOM':
+                    order.delivery_cost = order.wilaya.home_delivery #a performer pck sa depend du choix de lutilisateur
+                else: 
+                    order.delivery_cost = 0  #a performer pck sa depend du choix de lutilisateur
+                print('oDELIVERY CHOIXE', form.cleaned_data['delivery'])
                 order.save()
                 # print('delivery cost', order.wilaya.price)
                 for item in cart:
@@ -60,33 +72,17 @@ def cart_detail(request):
                 except:
                     pass
                 cart.clear()
+                order_created.delay(order.id)
+
                 total_price = cart.get_total_price_after_discount()
                 total_price_with_delivery = total_price + order.delivery_cost
-            
-                subject = f'Commande N°: {order.id}'
-                message = f'Chére {order.first_name},\n\n vous avez passer une commande avec succés' f'votre identifiant de commande est le: {order.id}'
-                try :
-                    response = HttpResponse(content_type='application/pdf' )
-                    response['Content-Disposition' ] = f'filename=order_{order.id}.pdf'
-                    business   = Business.objects.last().name
-                    html = render_to_string('order_pdf.html' , {'order' : order, 'business': business})
-                    out = BytesIO()
-                    pdf_file = weasyprint.HTML(string=html).write_pdf(response)
-                    mail = EmailMessage(subject, message, 'octopus.emailing@gmail.com',[order.email])
-                    mail.attach(pdf_file,out.getvalue(),'application/pdf')
-                    mail.send()
-                    context = {
-                        'order': order,
-                        # 'products_total': products_total, 
-                        'total_price': total_price,
-                        'delivery': order.delivery_cost,
-                        'total_price_with_delivery': total_price_with_delivery,
-                        'pdf_file': pdf_file,
-                    }
-                    return render(request, 'created.html', context)
-                except :
-                    print('yaw matebaatch')
-                # stylesheets=[weasyprint.CSS(str(configs.STATIC_ROOT) + 'css/pdf.css' )]
+                context = {
+                    'order': order,
+                    'total_price': total_price,
+                    'delivery': order.delivery_cost,
+                    'total_price_with_delivery': total_price_with_delivery,
+                }
+                return render(request, 'created.html', context)
             else: 
                 print('the form is not valid')
                 return render(request, 'cart.html', {'cart':cart, 'form' : form, 'wilayas': wilayas, 'communes': communes})
