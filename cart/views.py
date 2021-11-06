@@ -16,10 +16,10 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 from django.core import serializers
 from order.forms import OrderCreateForm
-from django.core.mail import EmailMessage
 from io import BytesIO
 import weasyprint
 from .tasks import order_created
+from django.core.mail import EmailMessage, send_mail
     
 # class CheckoutView(TemplateView):
 #     template_name = "checkout.html"
@@ -71,7 +71,6 @@ def cart_detail(request):
                     pass
                 cart.clear()
                 order_created.delay(order.id)
-
                 total_price = cart.get_total_price_after_discount()
                 total_price_with_delivery = total_price + order.delivery_cost
                 context = {
