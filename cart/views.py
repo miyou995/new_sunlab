@@ -43,10 +43,8 @@ def cart_detail(request):
         # print('request', request.method)
         if request.method == 'POST':
             print('SEEEEENT FOOOOOOOOOORPM')
-
             form = OrderCreateForm(request.POST)
             # print(form)
-
             if form.is_valid():
                 print('VALID FOOOOOOOOOORPM')
                 order = form.save()
