@@ -23,7 +23,7 @@ def order_created(order_id):
     # stylesheets = [weasyprint.CSS(settings.STATIC_ROOT + 'css/pdf.css' )]
     weasyprint.HTML(string=html).write_pdf(out)
     # attach PDF file
-    mail_sent.attach(f'order_ {order.id}.pdf' ,
+    mail_sent.attach(f'order_{order.id}.pdf' ,
     out.getvalue(),
     'application/pdf'
     )
