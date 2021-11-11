@@ -1439,7 +1439,7 @@ textarea:focus {
 }
 /*Header Middle*/
 .header-middle {
-	padding: 30px;
+	padding-top: 18px;
 }
 .hm-searchbox {
 	display: flex;

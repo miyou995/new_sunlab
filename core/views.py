@@ -27,7 +27,6 @@ class IndexView(TemplateView):
         context["top_products"] = Product.objects.filter(top=True, actif=True)[:10]
         context["big_slides"]   = Slide.objects.filter(actif=True)
         context["three_photos"] = ThreePhotos.objects.all()[:3]
-        context["dual_banners"] = DualBanner.objects.all()[:2]
         context["large_banner"] = LargeBanner.objects.last()
         context["random_cat"]   = Category.objects.filter(actif=True)
         print(get_random_secret_key())
@@ -39,6 +38,9 @@ class IndexView(TemplateView):
         print('categories ', cat_list)
         context["random_cat"] = cat_list[:3]
         print('a tchou hadi', context["random_cat"])
+
+        if DualBanner.objects.filter(actif=True).count() >= 2:
+            context["dual_banners"] = DualBanner.objects.filter(actif=True)[:2]
         return context
 
 

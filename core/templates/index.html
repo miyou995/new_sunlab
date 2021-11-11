@@ -48,7 +48,7 @@
                         {% else %}
                             class="col-lg-12">
                         {% endif %}
-                        <div class="slider-area pt-sm-30 pt-xs-30">
+                        <div class="slider-area ">
                             <div class="slider-active owl-carousel">
                                 {% for slide in big_slides %}
                                     <a href="{{slide.url}}">
@@ -82,7 +82,7 @@
         </div>
         <!-- Li's Static Banner Area End Here -->
         <!-- Begin Li's Special Product Area -->
-        <section class="product-area li-laptop-product Special-product pt-60 pb-45">
+        <section class="product-area li-laptop-product Special-product pb-45">
             <div class="container">
                 <div class="row">
                     <!-- Begin Li's Section Area -->
@@ -108,30 +108,31 @@
         </section>
         <!-- Li's Special Product Area End Here -->
         <!-- Begin Li's Laptops Product | Home V2 Area -->
-        <section class="product-area li-laptop-product li-laptop-product-2 pb-45">
-            <div class="container">
-                <div class="row">
-                    <!-- Begin Li's Section Area -->
-                    <div class="col-lg-12">
-                        <div class="li-banner-2 pt-15 pb-15">
-                            <div class="row">
-                                {% if dual_banners.count == 2 %}
-                                    {% for banner in dual_banners %}
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="single-banner">
-                                                <a href="{{banner.url}}">
-                                                    <img src="{{banner.photo.url}}" alt="Li's Static Banner">
-                                                </a>
+        {% if dual_banners %}
+            <section class="product-area li-laptop-product li-laptop-product-2 pb-45">
+                <div class="container">
+                    <div class="row">
+                        <!-- Begin Li's Section Area -->
+                        <div class="col-lg-12">
+                            <div class="li-banner-2 pt-15 pb-15">
+                                <div class="row">
+                                        {% for banner in dual_banners %}
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="single-banner">
+                                                    <a href="{{banner.url}}">
+                                                        <img src="{{banner.photo.url}}" alt="Li's Static Banner">
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
+                                        {% endfor %}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        {% endif %}
+
         <section class="product-area li-trending-product li-trending-product-2  pb-45">
             <div class="container">
                 <div class="row">
