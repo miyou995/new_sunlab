@@ -209,19 +209,19 @@ $('#ordering').change(function(){
 		item: 4,
 		responsive: {
 			0: {
-					items: 1
-			},
-			480: {
-					items: 1
-			},
-			768: {
 					items: 2
 			},
+			480: {
+					items: 2
+			},
+			768: {
+					items:3
+			},
 			992: {
-					items: 3
+					items: 4
 			},
 			1200: {
-					items: 4
+					items: 5
 			}
 		}
 	});

@@ -38,7 +38,7 @@
             <form id="add_one_cart" hx-target=".hm-minicart" hx-swap="outerHTML" class="block2-btn-addcart">
                 {% csrf_token %}
                 <ul class="add-actions-link">
-                    <li class="add-cart active" style="width: 80%;"><a  hx-post="{% url 'cart:cart_one_add' product.id %}" class="block2-name" >Ajouter au panier</a></li>
+                    <li class="add-cart active" style="width: 77%;"><a  hx-post="{% url 'cart:cart_one_add' product.id %}" class="block2-name" >Ajouter au panier</a></li>
                     <li id="lunch_modal"  style="float: right;"><a href="{{product.get_absolute_url}}" title="quick view" class="quick-view-btn" ><i class="fa fa-eye"></i></a></li>
                 </ul>
             </form>

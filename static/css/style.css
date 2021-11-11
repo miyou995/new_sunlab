@@ -469,11 +469,11 @@ textarea:focus {
 }
 /*Home Two | Slider Background Image*/
 .bg-4, .bg-5, .bg-6 {
-	background-image: url(/static/images/slider/4.jpg);
+	/* background-image: url(/static/images/slider/4.jpg); */
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
-	min-height: 475px;
+	/* min-height: 475px; */
 	width: 100%;
 }
 .bg-5 {
@@ -4996,12 +4996,7 @@ span.required {
   padding: 15px;
   border: 1px solid #ededed;
 }
-@media only screen and (max-width: 767px) {
-	.shop-top-bar {
-		display: flex;
-		flex-wrap: wrap;
-	}
-}
+
 .product-short  .nice-select .option {
   line-height: 30px;
   min-height: 30px;
@@ -5009,6 +5004,16 @@ span.required {
 .product-image > a img {
 width: auto;
 max-height: 250px;
+}
+@media only screen and (max-width: 767px) {
+	.shop-top-bar {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.product-image > a img {
+		width: auto;
+		max-height: 100%;
+		}
 }
 .shop-products-wrapper .tab-content .tab-pane.active {
     display: block;
