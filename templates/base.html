@@ -21,7 +21,13 @@
         <meta property="og:title" content="{{business.title}}" />
         <meta property="og:type" content="Services" />
         <meta property="og:site_name" content="{{business.name}} | {{business.title}}" />
-    <title>{{business.title}}</title>
+        <title>{{business.title}}</title>
+        {% block meta %}
+          
+        {% endblock meta %}
+        {% for balise in balises %}
+          {{balise.balise|safe}}
+        {% endfor %}
         <!-- Favicon -->
             <link rel="shortcut icon" type="image/x-icon" href="{{business.logo.url}}">
             <!-- Material Design Iconic Font-V2.2.0 -->
@@ -357,20 +363,15 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <!-- Footer Block Area End Here -->
-                                <!-- Begin Footer Block Area -->
                                 <div class="col-lg-2 col-md-3 col-sm-6">
                                     <div class="footer-block">
                                         <h3 class="footer-block-title">{{business.name}}</h3>
                                         <ul>
-                                            <li><a class="text-uppercase" href="#">Nos réalisations</a></li>
                                             <li><a class="text-uppercase" href="{% url 'core:about' %}">A propos</a></li>
                                             <li><a class="text-uppercase" href="{% url 'core:contact' %}">Contact</a></li>
                                         </ul>
                                     </div>
                                 </div>
-                                <!-- Footer Block Area End Here -->
-                                <!-- Begin Footer Block Area -->
                                 <div class="col-lg-2">
                                     <div class="footer-block">
                                         <h3 class="footer-block-title">Suivez-nous</h3>

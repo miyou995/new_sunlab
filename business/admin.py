@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Business, Slide, ThreePhotos, Counter, LargeBanner ,DualBanner, Realisation, Partner, RealisationPhotos, ClientService
+from .models import Business, Slide, ThreePhotos, Counter, LargeBanner ,DualBanner, Realisation, Partner, RealisationPhotos, ClientService, SEO
 from django.utils.html import format_html
 
 from solo.admin import SingletonModelAdmin
@@ -62,6 +62,13 @@ class BusinesAdmin(SingletonModelAdmin):
     # def has_add_permission(self, request):
     #     return False
 
+
+@admin.register(SEO)
+class SEOAdmin(admin.ModelAdmin):
+    list_display = ('id', 'balise')
+    list_display_links = ('id', 'balise')
+    # def has_add_permission(self, request):
+    #     return False
 
 @admin.register(Counter)
 class CounterAdmin(admin.ModelAdmin):

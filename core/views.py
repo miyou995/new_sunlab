@@ -7,7 +7,7 @@ from .forms import ContactForm
 from delivery.models import Wilaya, Commune
 from django.views.generic import TemplateView, DetailView, ListView, CreateView, View
 from .models import Brand, Gamme, Product, Category, Tag
-from business.models import Business, ThreePhotos, Slide, DualBanner, Counter, LargeBanner
+from business.models import Business, ThreePhotos, Slide, DualBanner, Counter, LargeBanner, SEO
 from cart.forms import CartAddProductForm
 from business.models import Counter
 from .filters import ProductFilter
@@ -29,6 +29,8 @@ class IndexView(TemplateView):
         context["three_photos"] = ThreePhotos.objects.all()[:3]
         context["large_banner"] = LargeBanner.objects.last()
         context["random_cat"]   = Category.objects.filter(actif=True)
+        context["home_balises"] = SEO.objects.filter(actif=True, only_home_page=True)
+        
         print(get_random_secret_key())
         all_cat = Category.objects.filter(actif=True)
         cat_list = []

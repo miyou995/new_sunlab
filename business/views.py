@@ -5,7 +5,6 @@ from .models import Partner, Realisation
 
 class PartnerListView(ListView):
     context_object_name = 'partners'
-
     model = Partner
     template_name = "partner.html"
 

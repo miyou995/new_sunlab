@@ -2,6 +2,12 @@
 {% load static %}
 {% load mptt_tags %}
 
+{% block meta %}
+    {% for balise in home_balises %}
+        {{balise.balise|safe}}
+    {% endfor %}   
+{% endblock meta %}
+
 {% block content %}
         <div class="slider-with-banner" style="margin-top: 20px;">
             <div class="container">
@@ -52,7 +58,7 @@
                             <div class="slider-active owl-carousel">
                                 {% for slide in big_slides %}
                                     <a href="{{slide.url}}">
-                                        <div class="single-slide align-center-left  bg-4" style="background-image: url();">
+                                        <div class="single-slide align-center-left  bg-4">
                                             <img class="img-fluid animation-style-02" src="{{slide.photo.url}}" alt="">
                                             <div class="slider-progress"></div>
                                         </div>
@@ -133,7 +139,7 @@
             </section>
         {% endif %}
 
-        <section class="product-area li-trending-product li-trending-product-2  pb-45">
+        <section class="product-area li-trending-product li-trending-product-2 pb-45">
             <div class="container">
                 <div class="row">
                     <!-- Begin Li's Tab Menu Area -->

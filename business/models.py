@@ -212,6 +212,15 @@ class Partner(models.Model):
         verbose_name = '9. Nos Partenaires'
         verbose_name_plural = '9. Nos Partenaires'
 
+class SEO(models.Model):
+    balise   = models.TextField(verbose_name="Script Analytics", blank=True, null=True)
+    actif  = models.BooleanField(verbose_name='actif', default=True)
+    only_home_page = models.BooleanField(verbose_name='Page principale uniquement', default=False)
+    class Meta:
+        verbose_name = '10. Balises META'
+        verbose_name_plural = '10.  Balises META'
+
+
 # def create_counter_signal(sender, **kwargs):
 #     if Counter.objects.count() > 3:
 #         print('ouiii je suis init')
