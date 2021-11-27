@@ -1,9 +1,9 @@
 {% load i18n %} 
 {% load static %}
 <div class="single-product-wrap">
-    <div class="product-image">
+    <div class="product-image d-flex justify-content-center">
         <a href="{{product.get_absolute_url}}">
-            <img 
+            <img class=""
             {% if product.photos.all.0 %}
                 src="{{product.photos.all.0.fichier.url}}" alt="{{product.name}}">
             {% else %}
@@ -24,35 +24,34 @@
                     {% endif %}
                 </h5>
             </div>
-            <h4><a class="product_name" href="{{product.get_absolute_url}}">{{product.name}}</a></h4>
+            <h4><a class="product_name" href="{{product.get_absolute_url}}">{{product.name|truncatewords:4}}</a></h4>
             <div class="price-box">
                 <span class="new-price new-price-2">{{product.price}} DA</span>
                 {% if product.old_price %}
-                    <span class="old-price">{{product.old_price}} DA</span>
+                    <span class="old-price">{{product.old_price}}</span>
                     <span class="discount-percentage">{{product.promo}}%</span>
                 {% endif %}
             </div>
         </div>
-        <div class="add-actions">
+        <div class="add-actions d-none d-md-block">
             <form id="add_one_cart" hx-target=".hm-minicart" hx-swap="outerHTML" class="block2-btn-addcart">
                 {% csrf_token %}
-                <ul class="add-actions-link">
-                    <li class="add-cart active" style="width: 77%;"><a  hx-post="{% url 'cart:cart_one_add' product.id %}" class="block2-name" >Ajouter au panier</a></li>
-                    <li id="lunch_modal"  style="float: right;"><a href="{{product.get_absolute_url}}" title="quick view" class="quick-view-btn" ><i class="fa fa-eye"></i></a></li>
+                <ul class="add-actions-link d-flex justify-content-center">
+                    <li class="add-cart active" ><a hx-post="{% url 'cart:cart_one_add' product.id %}" class="block2-name" >Ajouter au panier</a></li>
                 </ul>
             </form>
         </div>
     </div>
 </div>
 
-{% block extrajs %}
-    <script type="text/javascript">
-        $('.block2-btn-addcart').each(function(){
-            var nameProduct = $(this).parent().parent().parent().parent().find('.product_name').html();
-            $(this).on('click', function(){
-                swal(nameProduct, "Ajouté au panier", "success");
-            });
+
+ {% block extrajs %}
+ <script>
+    $('.block2-btn-addcart').each(function(){
+        var nameProduct = $(this).parent().parent().parent().parent().find('.product_name').html();
+        $(this).on('click', function(){
+            swal(nameProduct, "Ajouté au panier", "success");
         });
-    </script>
-{% endblock extrajs %}
- 
+    });
+</script>
+ {% endblock extrajs %}

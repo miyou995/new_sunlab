@@ -2381,7 +2381,7 @@ li > ul > li:hover > ul.hb-sub-dropdown {
 	background: #eef0f1;
 	border: 1px solid #e1e1e1;
 	transition: all 0.3s ease-in-out;
-	width: 120px;
+	width: 100%;
 }
 .add-actions-link li:hover {
 	background: #F5BE07;
