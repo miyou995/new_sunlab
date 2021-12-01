@@ -85,11 +85,7 @@ class Slide(models.Model):
         verbose_name = '2. Slides haut page d\'accueil'
         verbose_name_plural = '2. Slides haut page d\'accueil'
 
-    def clean(self):
-        model = self.__class__
-        if (model.objects.count() > 5 and
-                self.id != model.objects.get().id):
-            raise ValidationError("Vous ne pouvez pas rajouter d'autres Slides")
+
 
 
 class ThreePhotos(models.Model):
